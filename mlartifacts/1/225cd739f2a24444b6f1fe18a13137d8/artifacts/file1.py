@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
@@ -45,11 +46,14 @@ with mlflow.start_run():
 
     # save plot
     plt.savefig("Confusion-matrix.png")
+    plt.close()
 
     # log artifacts using mlflow
     mlflow.log_artifact("Confusion-matrix.png")
     mlflow.log_artifact(__file__)
 
+    # Clean up temporary file
+    os.remove("Confusion-matrix.png")
     # tags
     mlflow.set_tags({"Author": 'Archisman Ghosh', "Project": "Wine Classification"})
 
